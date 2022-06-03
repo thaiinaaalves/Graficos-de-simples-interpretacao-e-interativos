@@ -1,0 +1,98 @@
+---
+title: "Untitled"
+output: pdf_document
+date: '2022-05-25'
+---
+
+Instalando pacotes
+
+```{r}
+install.packages("tidyverse")
+install.packages("plotly")
+install.packages("ggrepel")
+install.packages("PerformanceAnalytics")
+install.packages("reshape2")
+install.packages("rmarkdown")
+
+library(tidyverse)
+library(plotly)
+library(ggrepel)
+library(PerformanceAnalytics)
+library(reshape2)
+```
+
+Criando gráfico de barras
+```{r}
+load('Perfil_investidor.RData')
+ggplot(data=perfil_investidor) +
+  geom_bar(aes(x=perfil))
+```
+
+Colocando variáveis em ordem desejada
+```{r}
+perfil_investidor$perfil <- 
+  factor(perfil_investidor$perfil,
+         levels = c('Conservador', 'Moderado', 'Agressivo'))
+```
+
+Acrescentando legendas
+```{r}
+ggplot(data=perfil_investidor)+
+  geom_bar(aes(x=perfil))+
+  labs(title='Perfil dos Investidores do Banco X',
+       x = 'Perfil do Investidor',
+       y = 'Quantidade',
+caption='Período: 2022')
+
+```
+
+Adicionando cores
+```{r}
+ggplot(data=perfil_investidor)+
+  geom_bar(aes(x=perfil), fill='cyan1')+
+  labs(title='Perfil dos Investidores',
+       subtitle = 'Banco X',
+       x="Perfil do Invertidorr",
+       y="Quantidade",
+       caption = "Período: 2022")
+```
+
+No endereço que segue, é possível encontrar todas as cores
+possíveis de serem declaradas em R: (http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
+
+Alterando cores e incluindo bordas
+```{r}
+ggplot(data=perfil_investidor)+
+  geom_bar(aes(x=perfil), color="blue4", fill="cyan1")+
+  labs(title="Perfil dos Investidores",
+       subtitle = "Banco X",
+       x="Perfil do Investidor",
+       y="Quantidade",
+       caption="Período: 2022")
+```
+Adicionando labels:
+```{r}
+ggplot(data=perfil_investidor)+
+  geom_bar(aes(x=perfil), color="blue4", fill="cyan1")+
+  geom_text(aes(x=perfil, label=..count..), stat="count",
+            vjust=-1)+
+  labs(title="Perfil dos Investidores",
+       subtitle = "Banco X",
+       x="Perfil do Investidor",
+       y="Quantidade",
+       caption="Período: 2022")
+```
+Rotacionando gráfico:
+```{r}
+ggplot(data=perfil_investidor)+
+  geom_bar(aes(x=perfil), color="blue4", fill="cyan1")+
+  geom_text(aes(x=perfil, label=..count..), stat="count",
+                hjust=-1)+
+  labs(title="Perfil dos Investidorres",
+       subtitle = "Banco X",
+       x="Perfil do Investidor",
+       y="Quantidade",
+       caption = "Período: 2022")+
+    coord_flip()
+```
+
